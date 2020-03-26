@@ -1,0 +1,56 @@
+#include<stdio.h>
+struct node
+{
+    int val;
+    node*last;
+};
+struct node *top=NULL;
+void push(int val)
+{
+    node* temp=new node;
+    if(temp==NULL)
+    {
+        printf("No error available Error\n");
+        printf("Push fail\n");
+        return;
+    }
+    temp->val=val;
+    temp->last=top;
+    top=temp;
+    printf("The value pushed in is %d\n",val);
+}
+void pop()
+{
+    if(top==NULL)
+    {
+        printf("The stack is empty can not pop Error\n");
+        printf("Pop fail\n");
+        return;
+    }
+    int ans=top->val;
+    node *temp=top;
+    top=top->last;
+    delete(temp);
+     printf("The value poped is %d\n",ans);
+}
+int main(void)
+{
+
+    int ope;
+    while(scanf("%d",&ope))
+    {
+        if(ope==0)break;
+        if(ope==1)
+        {
+            int val;
+            scanf("%d",&val);
+            push(val);
+
+        }
+        if(ope==2)
+        {
+            pop();
+
+        }
+    }
+}

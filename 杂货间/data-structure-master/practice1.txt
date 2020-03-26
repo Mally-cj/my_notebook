@@ -1,0 +1,32 @@
+#include<stdio.h>
+#define ll long long int  //由于fibonacci增长很快，故而不用int，用long long int
+int main(void)
+{
+    int cas=0;
+    while(1)
+    {
+
+        int n,i;
+        ll a=0,b=1;
+        printf("Case %d:\n",++cas);
+        printf("Enter the value of n:");
+        scanf("%d",&n);
+        if(n<0){printf("Error\n\n");continue;}
+         printf("The Fibonacci series is:\n");
+        if(n==0){printf("0\n\n");continue;}
+        if(n==1){printf("1\n\n");continue;}
+        if(n==2){printf("0 1\n\n");continue;}
+
+
+        printf("0 1 ");
+        for( i=3;i<=n;i++)
+        {
+            printf("%lld%s",a+b,i==n?"\n\n":" ");
+            ll tem=a;
+            a=b;
+            b=tem+b;
+        }
+
+    }
+    return 0;
+}

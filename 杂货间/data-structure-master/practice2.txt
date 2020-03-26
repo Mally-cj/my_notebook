@@ -1,0 +1,27 @@
+#include<stdio.h>
+#define ll long long int
+ll fibonacci[200];
+ll fib(int a)
+{
+    if(a==0) return fibonacci[0]=0;
+    if(a==1) return fibonacci[1]=1;
+    return fibonacci[a]=fib(a-1)+fib(a-2);
+}
+int main(void)
+{
+    int cas=0,i,n;
+    while(1)
+    {
+        printf("Case %d:\n",++cas);
+        printf("Enter the value of n:");
+        scanf("%d",&n);
+        if(n<0){printf("Error\n\n");continue;}
+        else printf("The Fibonacci series is:\n");
+        if(n==0){printf("0\n\n");continue;}
+        if(n==1){printf("1\n\n");continue;}
+        fib(n);
+        for(i=0;i<n;i++)
+            printf("%lld%s",fibonacci[i],i==n-1?"\n\n":" ");
+    }
+    return 0;
+}

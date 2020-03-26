@@ -1,0 +1,43 @@
+#include<stdio.h>
+void solve(int n)
+{
+int i, tot,t,k;
+int s;
+
+  tot=(1<<n)-1;
+	 for( i=1; i <=tot; i++ ){
+	    for( t=2,s=1; s<= n; s++,t*=2)if( i%t == t/2 ) break;// "s"means which disk should be move now
+	      k = i/t;// "k" indicate the number of movement of th disk.
+			if( n%2 == s%2 ){//  go of recursion like hannoi(A,C,B)
+					if( (k+1)%3 == 0 ) printf("%d from B to A\n",s);
+					if( (k+1)%3 == 1 ) printf("%d from A to C\n",s);
+					if( (k+1)%3 == 2 ) printf("%d from C to B\n",s);
+			}
+			else{
+                    //  back of recursion like hannoi(B,A,C)
+					if( (k+1)%3 == 0 ) printf("%d from C to A\n",s);
+					if( (k+1)%3 == 1 ) printf("%d from A to B\n",s);
+					if( (k+1)%3 == 2 ) printf("%d from B to C\n",s);
+	        }
+	 }
+}
+int main(void)
+{
+    int cas=0;
+    int n;
+    while(1)
+    {
+        if(cas)printf("\n");
+        printf("Case %d:\n",++cas);
+        printf("Enter the number of disks :");
+        scanf("%d",&n);
+        if(n<=0)
+        {
+            printf("Enter a number greater than 0\n");continue;
+        }
+        printf("The sequence of moves involved in the Tower of Hanoi are:\n\n");
+       solve(n);
+
+    }
+    return 0;
+}

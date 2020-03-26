@@ -1,0 +1,89 @@
+#include<stdio.h>
+const int maxn=1000;
+bool get_len(int *len,int a)
+{
+  printf("Enter the number of terms in polynomial %d\n",a);
+  scanf("%d",len);
+  if(*len<=0){printf("Enter a value greater than 0\n");return 0;}
+  return 1;
+}
+void show(int poly[])
+{
+    for(int i=1;i<=poly[1];)
+    {
+        printf("%dx^%d",poly[i*2],poly[i*2+1]);
+        if(++i<=poly[1])printf("+");
+    }
+    printf("\n\n");
+}
+void get_poly(int poly[],int len,int a)
+{
+   printf("Enter the coefficient and exponent in desecnding order for polynomial %d.\n",a);
+   poly[1]=len;
+   for(int i=1;i<=len;i++)
+   {
+       scanf("%d %d",&poly[i*2],&poly[i*2+1]);
+   }
+   printf("The given polynomial %d is: ");
+   show(poly);
+}
+void add(int poly1[],int poly2[],int poly3[])
+{
+    int p1,p2,p3;
+    p1=p2=p3=1;
+    for(;p1<=poly1[1]&&p2<=poly2[1];)
+    {
+        if(poly1[p1*2+1]==poly2[p2*2+1])
+        {
+            poly3[p3*2]=poly1[p1*2]+poly2[p2*2];
+            poly3[p3*2+1]=poly1[p1*2+1];
+            p1++;p2++;
+            if(poly3[p3*2])p3++;
+        }
+        else if(poly1[p1*2+1]<poly2[p2*2+1])
+        {
+            poly3[p3*2]=poly2[p2*2];
+            poly3[p3*2+1]=poly2[p2*2+1];
+            p2++;p3++;
+        }
+        else if(poly1[p1*2+1]>poly2[p2*2+1])
+        {
+            poly3[p3*2]=poly1[p1*2];
+            poly3[p3*2+1]=poly1[p1*2+1];
+            p1++;p3++;
+        }
+    }
+    for(;p1<=poly1[1];)
+    {
+            poly3[p3*2]=poly1[p1*2];
+            poly3[p3*2+1]=poly1[p1*2+1];
+            p1++;p3++;
+    }
+
+    for(;p2<=poly2[1];)
+    {
+            poly3[p3*2]=poly2[p2*2];
+            poly3[p3*2+1]=poly2[p2*2+1];
+            p2++;p3++;
+    }
+    p3--;
+    poly3[1]=p3;
+    printf("The polynomial after addition is:");
+    show(poly3);
+}
+int main(void)
+{
+    int len1,len2;
+    int poly1[maxn],poly2[maxn],poly3[maxn],cas=0;
+  
+    while(1)
+    {
+    printf("Case %d:\n",++cas);
+    if(!get_len(&len1,1)||!get_len(&len2,2)){printf("\n");continue;}
+    printf("\n");
+    get_poly(poly1,len1,1);
+    get_poly(poly2,len2,2);
+    add(poly1,poly2,poly3);
+    }
+    return 0;
+}

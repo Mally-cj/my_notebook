@@ -1,0 +1,32 @@
+#include<stdio.h>
+void hanoi(int n,char a,char b,char c)
+{
+    if(n==1)
+    {
+        printf("Move disk %d from Peg %c to Peg %c\n",n,a,c);
+        return;
+    }
+    hanoi(n-1,a,c,b);
+    printf("Move disk %d from Peg %c to Peg %c\n",n,a,c);
+    hanoi(n-1,b,a,c);
+}
+int main(void)
+{
+    int cas=0;
+    int n;
+    while(1)
+    {
+        if(cas)printf("\n");
+        printf("Case %d:\n",++cas);
+        printf("Enter the number of disks :");
+        scanf("%d",&n);
+        if(n<=0)
+        {
+            printf("Enter a number greater than 0\n");continue;
+        }
+        printf("The sequence of moves involved in the Tower of Hanoi are:\n\n");
+        hanoi(n,'A','B','C');
+
+    }
+    return 0;
+}

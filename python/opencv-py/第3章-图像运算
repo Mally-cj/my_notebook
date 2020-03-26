@@ -1,0 +1,157 @@
+## 第3章 图像运算
+
+[TOC]
+
+## 1. 加法
+
+（一）使用“+”号时，
+$$
+a+b=\begin{cases}
+a+b        , \quad \quad   \quad\quad a+b<=255 \\\\
+(a+b)\%255  ,\quad a+b>255
+\end{cases}
+$$
+（二）使用 cv2.add()函数时，
+$$
+a+b=\begin{cases}
+a+b        , \quad \quad\quad a+b<=255 \\\\
+255  ,\quad\quad \quad\quad a+b>255
+\end{cases}
+$$
+
+```python
+import cv2
+import numpy as np
+img1=np.random.randint(0,256,(3,3),dtype=np.uint8)
+img2=np.random.randint(0,256,(3,3),dtype=np.uint8)
+print("img1=\n",img1)
+print("img2=\n",img2)
+
+img3=img2+img1
+print("img3=\n",img3)
+
+img4=cv2.add(img1,img2)
+print("img4=\n",img4)
+```
+
+
+
+## 2.加权加法
+
+ $dst =saturate(src1* \alpha+src2*\beta+\gamma)$ 
+
+即结果图像=取饱和值（图像1 \* 权值1+图像2 \*  权值2+亮度调节量）
+
+cv2.addweighted(src1, alpha , src2, beta, gamma)
+
+
+
+```python
+import cv2
+import numpy as np
+a=cv2.imread("5.jpeg")
+b=cv2.imread("6.jpg")
+print(a.shape)
+print(b.shape)
+a=a[50:250,20:220]
+b=b[70:270,120:320]
+#以上是为了把两个图像变成大小一样的数组
+
+result=cv2.addWeighted(a,0.35,b,0.65,0)
+cv2.imshow("result",result)
+cv2.waitKey()
+```
+
+![2020-01-21 15-12-30 的屏幕截图](https://user-images.githubusercontent.com/51468122/72783162-b639f500-3c60-11ea-9666-4cfc5b12a730.png)
+
+
+
+## **3.掩模**
+
+也成为掩玛
+
+原理就是用 and,or,nor 去把部分信息掩盖。
+
+```python
+import cv2
+import numpy as np
+a=cv2.imread("5.jpeg")
+print(a.shape)
+#b=np.random.randint(1,255,a.shape,dtype=np.uint8)
+b=np.zeros(a.shape,dtype=np.uint8)
+b[100:200,100:200]= 255
+print("a.shape=",a.shape)
+cv2.imshow("a",a)
+cv2.imshow("b",b)
+c=cv2.bitwise_and(a,b)
+cv2.imshow("c",c)
+cv2.waitKey()
+```
+
+<img src="https://user-images.githubusercontent.com/51468122/72795554-d5448100-3c78-11ea-877a-ae81f6ddac76.png" alt="2020-01-21 17-32-38 的屏幕截图" style="zoom:50%;" />
+
+
+
+## **4.位平面分解**
+
+在8 位灰度图中,每一个像素使用8 位二进制值来表示,其值的范围在 [0.255] 之间,可以将其中的值表示为
+
+$$value= a_7 * 2^7+a_6* 2^6+a_5 * 2^5+a_4 * 2^4+a_3 * 2^3+a_2 * 2^2+a_1 * 2^1+a_0 * 2^0$$
+
+故而可将8位灰度图分解为8个位平面。
+
+此代码可以观察灰度图像的各个位平面
+
+```python
+import  cv2
+import numpy as np
+lena=cv2.imread("5.jpeg",0)
+print(lena.shape)
+cv2.imshow("lena",lena)
+r,c=lena.shape
+x=np.zeros((r,c,8),dtype=np.uint8)
+for i in range(8):
+    x[:,:,i]=2**i
+
+a=np.zeros((r,c,8),dtype=np.uint8)
+for i in range(8):
+    a[:,:,i]=cv2.bitwise_and(lena,x[:,:,i])
+    mask=a[:,:,i]>0
+    a[mask]=255
+    cv2.imshow("bitmap :"+str(i),a[:,:,i])  //str函数用来避免把变量转成字符
+cv2.waitKey()
+```
+
+![2020-01-21 19-28-50 的屏幕截图](https://user-images.githubusercontent.com/51468122/72801447-771d9b00-3c84-11ea-8006-d74dcb056ebb.png)
+
+
+
+## 5.图像加密和解密
+
+a:明文，原始数据
+
+b:密匙
+
+c:秘文 ，通过xor(a,b)实现
+
+加密过程：c=xor(a,b)
+
+解密过程：a=xor(c,b)
+
+```python
+import cv2
+import numpy as np
+
+lena=cv2.imread("5.jpeg",0)						#原始图像
+r,c=lena.shape
+key=np.random.randint(0,256,size=[r,c],dtype=np.uint8)		#密钥图像
+encryption=cv2.bitwise_xor(lena,key)											#加密图像
+decryption=cv2.bitwise_xor(encryption,key)								#解密图像
+cv2.imshow("lena",lena)
+cv2.imshow("key",key)
+cv2.imshow("encryption",encryption)
+cv2.imshow("decryption",decryption)
+cv2.waitKey()
+```
+
+![2020-01-21 20-50-29 的屏幕截图](https://user-images.githubusercontent.com/51468122/72806344-f8c6f600-3c8f-11ea-8a3e-1714fa6f49e9.png)

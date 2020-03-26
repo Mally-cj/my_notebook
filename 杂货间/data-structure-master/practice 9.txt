@@ -1,0 +1,64 @@
+#include<stdio.h>
+int a[1000][3];
+int b[1000][3];
+
+void transport(int r,int c,int non)
+{
+	int cnt=0,i,d,k;
+	b[cnt][0]=r;b[cnt][1]=c;b[cnt][2]=non;
+	for( i=1;i<=r&&cnt<non;i++)
+	{
+		for( d=1;d<=c&&cnt<non;d++)
+		{
+			for( k=1;k<=non;k++)
+			{
+				if(a[k][0]==d&&a[k][1]==i)
+				{b[++cnt][0]=i;
+					b[cnt][1]=d;
+					b[cnt][2]=a[k][2];
+					break;
+				}
+			}
+		}
+	}
+}
+void show(int non)
+{
+	int i;
+	printf("The transfort of Matrix A is\n");
+	for( i=0;i<=non;i++)
+		printf("%d %d %d\n",b[i][0],b[i][1],b[i][2]);
+		printf("\n");
+}
+
+int main(void)
+{
+	int cas=0;
+	int r,c,i,non;
+
+	while(1)
+	{
+		printf("Case %d\n",++cas);
+		printf("Enter the values of rows,columns,and number of non-zero terms for\nmatrix A.\n");
+		scanf("%d %d %d",&r,&c,&non);
+		printf("\n");
+		if(r<=0||c<=0||non<=0){
+			printf("Enter the values of rows,columns,and number of non-zero terms greater than 0.\n\n");	
+			continue;
+		}
+		if(non>r*c)
+		{
+			printf("Enter the non-zero terms less than product of row and columns.\n\n");
+			continue;
+		}
+		printf("Enter %d row,and column,and non-zero valus one by one\n",non);
+			for(i=1;i<=non;i++)
+			{
+			 scanf("%d %d %d",&a[i][0],&a[i][1],&a[i][2]);
+			}
+			printf("\n");
+		transport(c,r,non);
+		show(non);
+	}
+   return 0;
+}
