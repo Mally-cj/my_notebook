@@ -18,6 +18,14 @@ locate eigen3   #查找eigen3在哪
 mkdir build
 cd build
 cmake..
-make
+make     //也可以使用多线程 make -j4
+```
+
+提交文件
+
+```
+git add*
+git commit -m"new file"
+git push
 ```
 
