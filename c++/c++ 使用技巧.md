@@ -53,3 +53,29 @@ static int s_initValue;
 int g_howMuchMoney
 ```
 
+#### 写法技巧
+
+:star: 使用指针来减少不定长字符串的空间浪费
+
+```
+  char name1[4][10]={"to","reduce","waste","spaces"};
+  char *name2[4]={"to","reduce","waste","spaces"};
+```
+
+
+
+:star: 使用原有的字符或字符串作为新声明字符串的初值
+
+```c++
+string字符串1（个数，字符）；//声明又重复字符个数的字符串
+string字符串2（字符串名称1);//声明把字符串1作为字符串2的初值
+string字符串3（字符串名称1，起始位置，长度);
+```
+示例
+```
+ string str1(4,'a');
+ string str2(str1);
+ string str3(str1,0,3);
+ cout<<str3<<endl;  //aaa
+```
+
