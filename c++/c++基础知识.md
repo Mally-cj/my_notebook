@@ -143,6 +143,35 @@ piFunc=iFunc;
 
 
 
+#### union
+
+union和结构体的不同在于 struct是把所有元素整成一个整体，而union是所有元素共用空间。
+
+```
+#include "cstdio"
+using namespace std;
+int main()
+{
+    union key{
+        int k;
+        char ch[2];
+    };
+    struct key2{
+        int k;
+        char ch[2];
+    };
+
+    key u;
+    key2 u2;
+    u.k=258;
+    printf("%d %d  %d\n",u.ch[0],u.ch[1],u.k);
+    printf("%d    %d\n", sizeof(u), sizeof(u2));    //4,8(结构体的大小不是简单叠加）
+    
+    u.ch[0]='5',u.ch[1]='1';
+    printf("%c  %c\n",u.k,u.ch[1]); // 5 1
+}
+```
+
 
 
 
