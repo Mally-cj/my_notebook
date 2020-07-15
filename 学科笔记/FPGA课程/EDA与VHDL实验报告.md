@@ -4,7 +4,7 @@
 
 大二下的一门课，学完一门课了，记录一下~
 
-EDA与VHDL这门课，实验部分包括vhdl和Altium Design
+EDA与VHDL这门课，实验部分包括vhdl和Altium Design，vhdl的实验算是认真做的，有稍微推导，希望给初学的你一些帮助。
 
 在写AD报告，真是用2天半，学习使用，最后一个多层原理图实验没有做。
 
