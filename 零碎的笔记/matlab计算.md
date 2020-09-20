@@ -139,3 +139,29 @@ end
 \7. pai=sqrt(6*sum(1./(n3.*n3))) 
 ```
 
+
+
+
+
+#### 计算定积分
+
+$$
+I_1=\int_{0}^{2\pi}\sqrt{cost^2+4sin(2t)^2+1dt}
+$$
+
+<一> 因为没有已知的字母，故可以用inline
+
+```
+f=inline('sqrt(cos(x.^2)+4*sin(4*x.^2)+1)');
+q=quad(f,0,2*pi)
+```
+
+<二> 用@
+
+变量名=@(输入参数列表)运算表达式这样产生的函数句柄变量不指向特定的函数, 而是一个函数表达式。 [来源处](https://blog.csdn.net/weixin_38009585/article/details/81016997)
+
+```matlab
+f=@(x)sqrt(cos(x.^2)+4*sin(4*x.^2)+1);
+q=quad(f,0,2*pi)
+```
+
