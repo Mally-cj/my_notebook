@@ -11,4 +11,4 @@ cin.getline(字符串变量，输入长度，字符串结束符)
   cin.getline(str,10,'\n');
   ```
 
-  
+   freopen("E:\project folds\ACM\acm\in.txt","r",stdin);
